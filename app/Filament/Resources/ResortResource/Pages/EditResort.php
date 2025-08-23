@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\HeroItemResource\Pages;
+namespace App\Filament\Resources\ResortResource\Pages;
 
-use App\Filament\Resources\HeroItemResource;
+use App\Filament\Resources\ResortResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
-class EditHeroItem extends EditRecord
+class EditResort extends EditRecord
 {
-    protected static string $resource = HeroItemResource::class;
+    protected static string $resource = ResortResource::class;
 
     protected function getHeaderActions(): array
     {
