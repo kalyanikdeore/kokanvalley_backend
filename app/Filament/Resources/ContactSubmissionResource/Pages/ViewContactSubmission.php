@@ -14,6 +14,10 @@ class ViewContactSubmission extends ViewRecord
     {
         return [
             Actions\EditAction::make(),
+            Actions\DeleteAction::make(),
+            Actions\Action::make('back')
+                ->label('Back')
+                ->url($this->getResource()::getUrl('index')),
         ];
     }
 }

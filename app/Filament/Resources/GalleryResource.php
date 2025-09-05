@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\GalleryResource\Pages;
-use App\Filament\Resources\GalleryResource\RelationManagers;
 use App\Models\Gallery;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class GalleryResource extends Resource
 {
@@ -23,67 +20,7 @@ class GalleryResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Page Content')
-                    ->schema([
-                        Forms\Components\TextInput::make('title')
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\Textarea::make('description')
-                            ->maxLength(500)
-                            ->columnSpanFull(),
-                    ]),
-                    
-                Forms\Components\Section::make('Gallery Images')
-                    ->schema([
-                        Forms\Components\Repeater::make('gallery_images')
-                            ->schema([
-                                Forms\Components\FileUpload::make('url')
-                                    ->image()
-                                    ->directory('gallery')
-                                    ->required(),
-                                Forms\Components\Select::make('category')
-                                    ->options([
-                                        'konkan_nature' => 'Konkan Nature',
-                                        'konkan_fruits' => 'Konkan Fruits',
-                                        'orchard_paradise' => 'Orchard Paradise',
-                                        'dining_experience' => 'Dining Experience',
-                                        'activities' => 'Activities',
-                                    ])
-                                    ->required(),
-                            ])
-                            ->grid(2)
-                            ->defaultItems(1)
-                            ->columnSpanFull(),
-                    ]),
-                    
-                Forms\Components\Section::make('Amenities Highlights')
-                    ->schema([
-                        Forms\Components\Repeater::make('amenities_highlights')
-                            ->schema([
-                                Forms\Components\TextInput::make('title')
-                                    ->required(),
-                                Forms\Components\Select::make('icon')
-                                    ->options([
-                                        'pool' => 'Swimming Pool',
-                                        'bed' => 'Luxury Rooms',
-                                        'utensils' => 'Dining Experience',
-                                        'tree' => 'Nature',
-                                        'hiking' => 'Activities',
-                                    ])
-                                    ->required(),
-                                Forms\Components\Textarea::make('description')
-                                    ->required(),
-                                Forms\Components\FileUpload::make('images')
-                                    ->image()
-                                    ->directory('amenities')
-                                    ->multiple()
-                                    ->maxFiles(3)
-                                    ->required(),
-                            ])
-                            ->defaultItems(3)
-                            ->columnSpanFull(),
-                    ]),
-                    
+                // Only Guest Experiences Section
                 Forms\Components\Section::make('Guest Experiences')
                     ->schema([
                         Forms\Components\Repeater::make('guest_experiences')
@@ -135,9 +72,7 @@ class GalleryResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array

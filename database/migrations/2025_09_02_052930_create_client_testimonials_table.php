@@ -1,5 +1,5 @@
+// database/migrations/xxxx_xx_xx_xxxxxx_create_client_testimonials_table.php
 <?php
-// database/migrations/xxxx_xx_xx_create_testimonials_table.php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -9,12 +9,12 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('testimonials', function (Blueprint $table) {
+        Schema::create('client_testimonials', function (Blueprint $table) {
             $table->id();
-            $table->json('name'); // Store multilingual names
-            $table->json('role'); // Store multilingual roles
-            $table->json('location'); // Store multilingual locations
-            $table->json('content'); // Store multilingual content
+            $table->json('name');
+            $table->json('role');
+            $table->json('location');
+            $table->json('content');
             $table->integer('rating');
             $table->integer('project_id');
             $table->integer('sort_order')->default(0);
@@ -25,6 +25,6 @@ return new class extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('testimonials');
+        Schema::dropIfExists('client_testimonials');
     }
 };

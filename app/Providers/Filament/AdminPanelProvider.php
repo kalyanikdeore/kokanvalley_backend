@@ -26,6 +26,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
+            ->brandname('konkan valley')
             ->login()
             ->colors([
                 'primary' => Color::Amber,

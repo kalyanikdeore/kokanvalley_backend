@@ -10,15 +10,17 @@ class ContactInformation extends Model
 {
     use HasFactory;
 
+    protected $table = 'contact_informations'; // Explicit table name
+
     protected $fillable = [
         'phone_number',
         'email',
         'addresses',
-        'social_links'
+        'social_links',
     ];
 
     protected $casts = [
         'addresses' => 'array',
-        'social_links' => 'array'
+        'social_links' => 'array',
     ];
 }

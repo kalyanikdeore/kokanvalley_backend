@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+
 class ContactSubmissionResource extends Resource
 {
     protected static ?string $model = ContactSubmission::class;
@@ -19,6 +20,48 @@ class ContactSubmissionResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left-ellipsis';
 
     protected static ?string $navigationGroup = 'Contact Management';
+
+    public static function form(Form $form): Form
+    {
+        return $form
+            ->schema([
+                Forms\Components\Section::make('Contact Information')
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->disabled()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('email')
+                            ->disabled()
+                            ->email()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('phone')
+                            ->disabled()
+                            ->tel()
+                            ->maxLength(255),
+                    ])
+                    ->columns(2),
+                
+                Forms\Components\Section::make('Message')
+                    ->schema([
+                        Forms\Components\Textarea::make('message')
+                            ->disabled()
+                            ->rows(10)
+                            ->columnSpanFull(),
+                    ]),
+                
+                Forms\Components\Section::make('Meta Information')
+                    ->schema([
+                        Forms\Components\DateTimePicker::make('created_at')
+                            ->disabled()
+                            ->label('Submitted At'),
+                        Forms\Components\DateTimePicker::make('updated_at')
+                            ->disabled()
+                            ->label('Last Updated'),
+                    ])
+                    ->columns(2)
+                    ->collapsible(),
+            ]);
+    }
 
     public static function table(Table $table): Table
     {

@@ -1,41 +1,31 @@
 <?php
-// app/Models/Testimonial.php
 
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Testimonial extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'role',
-        'location',
+        'project_id',
+        'client_name',
         'content',
         'rating',
-        'project_id',
-        'sort_order',
-        'is_active'
+        'order'
     ];
 
     protected $casts = [
-        'name' => 'array',
-        'role' => 'array',
-        'location' => 'array',
         'content' => 'array',
-        'is_active' => 'boolean'
+        'rating' => 'integer',
+        'order' => 'integer'
     ];
 
-    public function scopeActive($query)
+    public function project(): BelongsTo
     {
-        return $query->where('is_active', true);
-    }
-
-    public function scopeOrdered($query)
-    {
-        return $query->orderBy('sort_order');
+        return $this->belongsTo(Project::class);
     }
 }

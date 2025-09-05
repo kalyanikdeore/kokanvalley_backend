@@ -9,23 +9,25 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-// database/migrations/xxxx_xx_xx_create_amenities_table.php
+// database/migrations/xxxx_xx_xx_xxxxxx_create_gallery_items_table.php
 public function up()
 {
-    Schema::create('amenities', function (Blueprint $table) {
+    Schema::create('gallery_items', function (Blueprint $table) {
         $table->id();
+        $table->foreignId('category_id')->constrained('gallery_categories')->onDelete('cascade');
         $table->json('title'); // For multilingual support
-        $table->json('description'); // For multilingual support
-        $table->string('icon'); // pool, bed, utensils, etc.
-        $table->json('images'); // Store as JSON array
+        $table->text('image_path');
+        $table->integer('sort_order')->default(0);
+        $table->boolean('is_active')->default(true);
         $table->timestamps();
     });
 }
+
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('amenities');
+        Schema::dropIfExists('gallery_items');
     }
 };

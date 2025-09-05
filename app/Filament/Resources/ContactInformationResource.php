@@ -26,10 +26,10 @@ class ContactInformationResource extends Resource
     protected static ?string $pluralModelLabel = 'Contact Information';
 
     // Make it a singleton resource (only one record)
-    public static function canCreate(): bool
-    {
-        return false;
-    }
+    // public static function canCreate(): bool
+    // {
+    //     return false;
+    // }
 
     public static function form(Form $form): Form
     {

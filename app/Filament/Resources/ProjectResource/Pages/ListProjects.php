@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\AmenityResource\Pages;
+namespace App\Filament\Resources\ProjectResource\Pages;
 
-use App\Filament\Resources\AmenityResource;
+use App\Filament\Resources\ProjectResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
-class ListAmenities extends ListRecords
+class ListProjects extends ListRecords
 {
-    protected static string $resource = AmenityResource::class;
+    protected static string $resource = ProjectResource::class;
 
     protected function getHeaderActions(): array
     {
