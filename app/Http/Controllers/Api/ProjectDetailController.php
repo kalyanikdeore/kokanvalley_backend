@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectDetailController extends Controller
 {
@@ -19,7 +20,8 @@ class ProjectDetailController extends Controller
             'images', 
             'videos',
             'products.media',
-            'testimonials'
+            'testimonials',
+            'location' // Correct relationship name
         ])->where('slug', $decodedSlug)->first();
 
         if (!$project) {
@@ -39,6 +41,48 @@ class ProjectDetailController extends Controller
             }
         }
 
+        // Handle location data - check if location relationship exists and is not empty
+        $locationData = [
+            'lat' => null,
+            'lng' => null,
+            'address' => [
+                'en' => '',
+                'mr' => '',
+            ],
+            'embedUrl' => '',
+            'googleMapsLink' => '',
+            'zoomLevel' => 15,
+            'mapType' => 'roadmap'
+        ];
+
+        // Check if location relationship exists and has data
+        if ($project->location && $project->location->isNotEmpty()) {
+            // Get the first location (assuming one-to-one relationship)
+            $location = $project->location->first();
+            
+            // Generate Google Maps link
+            $googleMapsLink = '';
+            if ($location->lat && $location->lng) {
+                $googleMapsLink = "https://www.google.com/maps?q={$location->lat},{$location->lng}&z={$location->zoom_level}&t={$location->map_type}";
+            } elseif ($location->address_en) {
+                $encodedAddress = urlencode($location->address_en);
+                $googleMapsLink = "https://www.google.com/maps/search/?api=1&query={$encodedAddress}";
+            }
+
+            $locationData = [
+                'lat' => $location->lat,
+                'lng' => $location->lng,
+                'address' => [
+                    'en' => $location->address_en ?? '',
+                    'mr' => $location->address_mr ?? '',
+                ],
+                'embedUrl' => $location->embed_url ?? '',
+                'googleMapsLink' => $googleMapsLink,
+                'zoomLevel' => $location->zoom_level ?? 15,
+                'mapType' => $location->map_type ?? 'roadmap'
+            ];
+        }
+
         return response()->json([
             'id' => $project->id,
             'name' => [
@@ -55,7 +99,17 @@ class ProjectDetailController extends Controller
                 return ['url' => asset('storage/' . $image->path)];
             }),
             'videos' => $project->videos->map(function ($video) {
-                return ['url' => asset('storage/' . $video->path)];
+                // Check if video exists in storage
+                $videoExists = Storage::disk('public')->exists($video->video_path);
+                $thumbnailExists = $video->thumbnail_path ? Storage::disk('public')->exists($video->thumbnail_path) : false;
+                
+                return [
+                    'id' => $video->id,
+                    'video_url' => $videoExists ? asset('storage/' . $video->video_path) : null,
+                    'thumbnail_url' => $thumbnailExists ? asset('storage/' . $video->thumbnail_path) : null,
+                    'order' => $video->order,
+                    'exists' => $videoExists
+                ];
             }),
             'whyChooseUs' => $project->whyChooseUs->map(function ($item) {
                 return [
@@ -70,15 +124,7 @@ class ProjectDetailController extends Controller
                     'icon' => $item->icon,
                 ];
             }),
-            'location' => [
-                'lat' => $project->lat,
-                'lng' => $project->lng,
-                'address' => [
-                    'en' => $project->address_en ?? '',
-                    'mr' => $project->address_mr ?? '',
-                ],
-                'embedUrl' => $project->embed_url ?? '',
-            ],
+            'location' => $locationData, // Use the location data we prepared
             'products' => $project->products->map(function ($product) {
                 return [
                     'id' => $product->id,
@@ -94,7 +140,7 @@ class ProjectDetailController extends Controller
                     'media' => $product->media->map(function ($media) {
                         return [
                             'type' => $media->type,
-                            'url' => asset('storage/' . $media->media_path), // Changed from path to media_path
+                            'url' => asset('storage/' . $media->media_path),
                         ];
                     }),
                 ];

@@ -17,6 +17,18 @@ class ProjectVideo extends Model
         'order'
     ];
 
+    protected $appends = ['video_url', 'thumbnail_url'];
+
+    public function getVideoUrlAttribute()
+    {
+        return $this->video_path ? asset('storage/' . $this->video_path) : null;
+    }
+
+    public function getThumbnailUrlAttribute()
+    {
+        return $this->thumbnail_path ? asset('storage/' . $this->thumbnail_path) : null;
+    }
+
     public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);

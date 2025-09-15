@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
-class ProjectAmenity extends Model
+class StaticAmenitiesGallery extends Model
 {
     use HasFactory;
 
+    protected $table = 'static_amenities_galleries';
     protected $fillable = [
         'title',
         'description',
@@ -16,7 +18,6 @@ class ProjectAmenity extends Model
         'sort_order',
         'is_active'
     ];
-
     protected $casts = [
         'title' => 'array',
         'description' => 'array',
@@ -24,18 +25,15 @@ class ProjectAmenity extends Model
         'is_active' => 'boolean'
     ];
 
-    public function getTitleAttribute($value)
+    // Accessor to get full image URLs
+    public function getImageUrlsAttribute()
     {
-        return json_decode($value, true);
-    }
-
-    public function getDescriptionAttribute($value)
-    {
-        return json_decode($value, true);
-    }
-
-    public function getImagesAttribute($value)
-    {
-        return json_decode($value, true);
+        if (empty($this->images)) {
+            return [];
+        }
+        
+        return array_map(function ($image) {
+            return Storage::disk('static_amenities')->url($image);
+        }, $this->images);
     }
 }

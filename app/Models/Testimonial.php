@@ -4,27 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Testimonial extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        'name',
+        'content',      // single field for quotes
         'project_id',
-        'client_name',
-        'content',
         'rating',
-        'order'
+        'avatar_path',  // add avatar_path if uploading image
     ];
 
-    protected $casts = [
-        'content' => 'array',
-        'rating' => 'integer',
-        'order' => 'integer'
-    ];
-
-    public function project(): BelongsTo
+    public function project()
     {
         return $this->belongsTo(Project::class);
     }

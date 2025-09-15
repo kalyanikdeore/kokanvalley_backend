@@ -7,13 +7,13 @@ use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class TestimonialsRelationManager extends RelationManager
+
 {
     protected static string $relationship = 'testimonials';
 
+    // NON-STATIC method as required
     public function form(Form $form): Form
     {
         return $form
@@ -52,6 +52,7 @@ class TestimonialsRelationManager extends RelationManager
             ]);
     }
 
+    // NON-STATIC method as required
     public function table(Table $table): Table
     {
         return $table
@@ -70,9 +71,7 @@ class TestimonialsRelationManager extends RelationManager
                     ->color('warning')
                     ->getStateUsing(fn ($record) => str_repeat('⭐', $record->rating)),
             ])
-            ->filters([
-                //
-            ])
+            ->filters([])
             ->headerActions([
                 Tables\Actions\CreateAction::make(),
             ])

@@ -35,16 +35,12 @@ class ProjectVideoResource extends Resource
                     ->getOptionLabelFromRecordUsing(fn (Project $record) => $record->slug),
                 Forms\Components\FileUpload::make('video_path')
                     ->label('Video')
-                    ->acceptedFileTypes(['video/mp4', 'video/quicktime'])
+                    ->acceptedFileTypes(['video/mp4', 'video/quicktime', 'video/webm', 'video/avi'])
                     ->required()
                     ->directory('project-videos')
                     ->preserveFilenames()
-                    ->maxSize(10240),
-                Forms\Components\FileUpload::make('thumbnail_path')
-                    ->label('Thumbnail')
-                    ->image()
-                    ->directory('project-video-thumbnails')
-                    ->preserveFilenames(),
+                    ->maxSize(102400) // Increased to 100MB
+                    ->visibility('public'),
                 Forms\Components\TextInput::make('order')
                     ->numeric()
                     ->default(0),
@@ -62,9 +58,6 @@ class ProjectVideoResource extends Resource
                 Tables\Columns\TextColumn::make('video_path')
                     ->label('Video File')
                     ->limit(30),
-                Tables\Columns\ImageColumn::make('thumbnail_path')
-                    ->label('Thumbnail')
-                    ->circular(),
                 Tables\Columns\TextColumn::make('order')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')

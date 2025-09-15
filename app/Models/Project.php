@@ -40,6 +40,11 @@ class Project extends Model
         return $this->hasMany(ProjectHighlight::class);
     }
 
+        public function location(): HasMany
+    {
+        return $this->hasMany(ProjectLocation::class);
+    }
+
     /**
      * Get all images for the project
      */

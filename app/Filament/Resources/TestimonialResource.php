@@ -3,15 +3,10 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\TestimonialResource\Pages;
-use App\Filament\Resources\TestimonialResource\RelationManagers;
 use App\Models\Testimonial;
 use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class TestimonialResource extends Resource
 {
@@ -21,27 +16,24 @@ class TestimonialResource extends Resource
     protected static ?string $navigationGroup = 'Content';
     protected static ?int $navigationSort = 1;
 
-    public static function form(Form $form): Form
+    // Form schema
+    public static function form(Forms\Form $form): Forms\Form
     {
         return $form
             ->schema([
                 Forms\Components\Select::make('project_id')
-                    ->relationship('project', 'name_en'),
+                    ->relationship('project', 'name') // Make sure your projects table has 'name'
+                    ->searchable()
+                    ->required(),
+
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('location_en')
-                    ->label('Location (English)')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('location_mr')
-                    ->label('Location (Marathi)')
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('quote_en')
-                    ->label('Quote (English)')
+
+                Forms\Components\Textarea::make('content')
+                    ->label('Quote')
                     ->required(),
-                Forms\Components\Textarea::make('quote_mr')
-                    ->label('Quote (Marathi)')
-                    ->required(),
+
                 Forms\Components\Select::make('rating')
                     ->options([
                         1 => '1 Star',
@@ -52,7 +44,8 @@ class TestimonialResource extends Resource
                     ])
                     ->required()
                     ->default(5),
-                Forms\Components\FileUpload::make('image')
+
+                Forms\Components\FileUpload::make('avatar_path')
                     ->label('Profile Image')
                     ->image()
                     ->directory('testimonial-images')
@@ -61,29 +54,38 @@ class TestimonialResource extends Resource
             ]);
     }
 
-    public static function table(Table $table): Table
+    // Table schema
+    public static function table(Tables\Table $table): Tables\Table
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('image')
+                Tables\Columns\ImageColumn::make('avatar_path')
+                    ->label('Image')
                     ->size(50)
                     ->circular(),
+
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('project.name_en')
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('project.name')
                     ->label('Project')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('location_en')
-                    ->label('Location')
-                    ->limit(20),
+
+                Tables\Columns\TextColumn::make('content')
+                    ->label('Quote')
+                    ->limit(50),
+
                 Tables\Columns\IconColumn::make('rating')
-                    ->icon(fn ($state) => 'heroicon-o-star')
+                    ->icon('heroicon-o-star')
                     ->color('warning')
                     ->getStateUsing(fn ($record) => str_repeat('⭐', $record->rating)),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
@@ -91,24 +93,20 @@ class TestimonialResource extends Resource
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('project')
-                    ->relationship('project', 'name_en'),
+                    ->relationship('project', 'name'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array

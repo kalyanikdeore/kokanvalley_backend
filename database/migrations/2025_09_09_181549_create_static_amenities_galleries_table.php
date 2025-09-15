@@ -8,10 +8,10 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('project_amenities', function (Blueprint $table) {
+        Schema::create('static_amenities_galleries', function (Blueprint $table) {
             $table->id();
-            $table->json('title'); // Stores titles in multiple languages
-            $table->json('description'); // Stores descriptions in multiple languages
+            $table->json('title'); // Stores both English and Marathi titles
+            $table->json('description'); // Stores both English and Marathi descriptions
             $table->json('images'); // Stores array of image paths
             $table->integer('sort_order')->default(0);
             $table->boolean('is_active')->default(true);
@@ -21,6 +21,6 @@ return new class extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('project_amenities');
+        Schema::dropIfExists('static_amenities_galleries');
     }
 };
