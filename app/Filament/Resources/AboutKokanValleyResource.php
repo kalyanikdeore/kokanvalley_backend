@@ -19,6 +19,9 @@ class AboutKokanValleyResource extends Resource
     protected static ?string $model = AboutKokanValley::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-information-circle';
+    
+    protected static ?string $navigationGroup = 'Room Management';
+    protected static ?string $navigationLabel = 'Family Room About';
 
     public static function form(Form $form): Form
     {

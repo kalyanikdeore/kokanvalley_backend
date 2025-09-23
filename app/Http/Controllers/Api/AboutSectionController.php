@@ -1,7 +1,5 @@
 <?php
 
-// app/Http/Controllers/Api/AboutSectionController.php
-
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
@@ -80,10 +78,10 @@ class AboutSectionController extends Controller
                 ],
             ],
             'images' => [
-                'beach' => asset('storage/' . $aboutSection->image_beach),
-                'hills' => asset('storage/' . $aboutSection->image_hills),
-                'cuisine' => asset('storage/' . $aboutSection->image_cuisine),
-                'villages' => asset('storage/' . $aboutSection->image_villages),
+                'beach' => $aboutSection->image_beach ? asset('uploads/' . $aboutSection->image_beach) : null,
+                'hills' => $aboutSection->image_hills ? asset('uploads/' . $aboutSection->image_hills) : null,
+                'cuisine' => $aboutSection->image_cuisine ? asset('uploads/' . $aboutSection->image_cuisine) : null,
+                'villages' => $aboutSection->image_villages ? asset('uploads/' . $aboutSection->image_villages) : null,
             ]
         ]);
     }

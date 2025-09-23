@@ -8,6 +8,7 @@ use App\Models\KonkanGalleryImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class KonkanGalleryController extends Controller
 {
@@ -49,9 +50,12 @@ class KonkanGalleryController extends Controller
                 ];
 
                 foreach ($category->images as $image) {
+                    // Generate URL for uploaded images in public/uploads
+                    $imageUrl = url('uploads/' . $image->image_path);
+                    
                     $allImages[] = [
                         'id' => $image->id,
-                        'url' => asset('storage/' . $image->image_path),
+                        'url' => $imageUrl,
                         'category' => $category->slug
                     ];
                 }

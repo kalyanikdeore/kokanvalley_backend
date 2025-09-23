@@ -26,8 +26,9 @@ class GuestExperienceResource extends Resource
                 Forms\Components\FileUpload::make('image')
                     ->image()
                     ->required()
-                    ->directory('guest-experiences') // Store in guest-experiences directory
-                    ->visibility('public'), // Make files publicly accessible
+                    ->directory('guest-experiences')
+                    ->disk('public') // Use the public disk (now pointing to uploads)
+                    ->visibility('public'),
             ]);
     }
 
@@ -36,13 +37,18 @@ class GuestExperienceResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('image')
-                    ->disk('public'), // Read from public disk
+                    ->disk('public') // Read from public disk (uploads)
+                    ->size(100),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

@@ -24,8 +24,8 @@ class AboutKokanValleyController extends Controller
                         'en' => 'At Konkan valley agro farms, we are the fearless trailblazers...', 
                         'mr' => 'कोकण व्हॅली अ‍ॅग्रो फार्म्स मध्ये, आम्ही निधड्या मार्गक्रमक आहोत...'
                     ],
-                    'image1_url' => Storage::url('default-images/kokan4.jpg'),
-                    'image2_url' => Storage::url('default-images/kokan14.jpg'),
+                    'image1_url' => '/uploads/default-images/kokan4.jpg',
+                    'image2_url' => '/uploads/default-images/kokan14.jpg',
                     'video_url' => 'https://www.youtube.com/@KonkanVallyAgroFarms',
                     'watch_story_text' => ['en' => 'Watch our Story', 'mr' => 'आमची कहाणी पहा'],
                     'overlap_image_alt' => ['en' => 'Leela Farmhouse garden view', 'mr' => 'लीला फार्महाऊस बाग दृश्य'],
@@ -36,9 +36,9 @@ class AboutKokanValleyController extends Controller
             }
             
             // Convert stored paths to full URLs
-            $aboutKokanValley->image1_url = $aboutKokanValley->image1_url ? Storage::url($aboutKokanValley->image1_url) : null;
-            $aboutKokanValley->image2_url = $aboutKokanValley->image2_url ? Storage::url($aboutKokanValley->image2_url) : null;
-            $aboutKokanValley->founder_image_url = $aboutKokanValley->founder_image_url ? Storage::url($aboutKokanValley->founder_image_url) : null;
+            $aboutKokanValley->image1_url = $aboutKokanValley->image1_url ? $aboutKokanValley->image1_url : null;
+            $aboutKokanValley->image2_url = $aboutKokanValley->image2_url ? $aboutKokanValley->image2_url : null;
+            $aboutKokanValley->founder_image_url = $aboutKokanValley->founder_image_url ? $aboutKokanValley->founder_image_url : null;
             
             return response()->json([
                 'id' => $aboutKokanValley->id,
@@ -132,11 +132,7 @@ class AboutKokanValleyController extends Controller
     public function show(AboutKokanValley $aboutKokanValley)
     {
         try {
-            // Convert stored paths to full URLs
-            $aboutKokanValley->image1_url = $aboutKokanValley->image1_url ? Storage::url($aboutKokanValley->image1_url) : null;
-            $aboutKokanValley->image2_url = $aboutKokanValley->image2_url ? Storage::url($aboutKokanValley->image2_url) : null;
-            $aboutKokanValley->founder_image_url = $aboutKokanValley->founder_image_url ? Storage::url($aboutKokanValley->founder_image_url) : null;
-            
+            // Return paths as stored (relative to uploads directory)
             return response()->json([
                 'id' => $aboutKokanValley->id,
                 'title' => $aboutKokanValley->title,

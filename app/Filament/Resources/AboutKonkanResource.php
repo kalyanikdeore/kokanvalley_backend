@@ -17,7 +17,7 @@ class AboutKonkanResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-information-circle';
 
-    protected static ?string $navigationGroup = 'Content Management';
+    protected static ?string $navigationGroup = 'Home Page';
 
     public static function form(Form $form): Form
     {
@@ -43,11 +43,13 @@ class AboutKonkanResource extends Resource
                             ->label('Main Image')
                             ->image()
                             ->directory('about-konkan')
+                            ->disk('public')
                             ->required(),
                         Forms\Components\FileUpload::make('image2_url')
                             ->label('Overlap Image')
                             ->image()
                             ->directory('about-konkan')
+                            ->disk('public')
                             ->required(),
                         Forms\Components\TextInput::make('video_url')
                             ->label('YouTube Video URL')
@@ -71,7 +73,8 @@ class AboutKonkanResource extends Resource
                         Forms\Components\FileUpload::make('founder_image_url')
                             ->label('Founder Image')
                             ->image()
-                            ->directory('about-konkan/founder'),
+                            ->directory('about-konkan/founder')
+                            ->disk('public'),
                         Forms\Components\TextInput::make('founder_name.en')
                             ->label('Founder Name (English)'),
                         Forms\Components\TextInput::make('founder_name.mr')
@@ -98,7 +101,8 @@ class AboutKonkanResource extends Resource
                     ->label('Title')
                     ->searchable(),
                 Tables\Columns\ImageColumn::make('image1_url')
-                    ->label('Main Image'),
+                    ->label('Main Image')
+                    ->disk('public'),
                 Tables\Columns\ToggleColumn::make('is_active')
                     ->label('Active'),
                 Tables\Columns\TextColumn::make('updated_at')

@@ -22,6 +22,9 @@ use App\Http\Controllers\Api\ClientTestimonialController;
 use App\Http\Controllers\Api\KonkanGalleryController;
 use App\Http\Controllers\Api\AmenityGalleryController;
 use App\Http\Controllers\Api\StaticAmenitiesGalleryController;
+use App\Http\Controllers\Api\LocationController ;
+use App\Http\Controllers\Api\ProductSectionController ;
+use App\Http\Controllers\Api\AmenitiesSectionController;
 
 Route::prefix('/api')->controller(HomeController::class)->group(function () { 
 Route::get('/why-choose', [WhyChooseController::class, 'index']);
@@ -44,4 +47,9 @@ Route::get('/client-testimonials', [ClientTestimonialController::class, 'index']
 Route::get('/konkan-gallery', [KonkanGalleryController::class, 'index']);
 Route::get('/amenities-gallery', [AmenityGalleryController::class, 'index']);
 Route::get('/static-amenities-gallery', [StaticAmenitiesGalleryController::class, 'index']);
+Route::get('/amenities-gallery', [CategorysectionController::class, 'index']);
+Route::get('/static-amenities-gallery', [ProductsectionController::class, 'index']);
+Route::get('/locations', [LocationController::class, 'index']);
+Route::get('/product-sections', [ProductSectionController::class, 'index']);
+Route::get('/amenities-sections', [AmenitiesSectionController::class, 'index']);
 });

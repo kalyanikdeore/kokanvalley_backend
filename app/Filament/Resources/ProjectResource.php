@@ -41,8 +41,9 @@ class ProjectResource extends Resource
                         Forms\Components\FileUpload::make('image')
                             ->image()
                             ->directory('projects')
-                            ->visibility('public') // Make files publicly accessible
-                            ->preserveFilenames() // Optional: preserve original filenames
+                            ->disk('public') // Use the 'public' disk (uploads directory)
+                            ->visibility('public')
+                            ->preserveFilenames()
                             ->columnSpanFull(),
                     ])
                     ->columns(2),
@@ -89,8 +90,8 @@ class ProjectResource extends Resource
                     })
                     ->searchable(),
                 Tables\Columns\ImageColumn::make('image')
-                    ->disk('public') // Specify the disk
-                    ->visibility('public'), // Make sure it's public
+                    ->disk('public') // Use the 'public' disk
+                    ->visibility('public'),
                 Tables\Columns\IconColumn::make('is_active')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -117,7 +118,7 @@ class ProjectResource extends Resource
             ]);
     }
 
-      public static function getRelations(): array
+    public static function getRelations(): array
     {
         return [
             RelationManagers\HighlightsRelationManager::class,
@@ -128,7 +129,6 @@ class ProjectResource extends Resource
             RelationManagers\TestimonialsRelationManager::class,
         ];
     }
-
 
     public static function getPages(): array
     {

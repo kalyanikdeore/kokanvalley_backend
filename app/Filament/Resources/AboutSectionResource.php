@@ -18,7 +18,8 @@ class AboutSectionResource extends Resource
     protected static ?string $model = AboutSection::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-information-circle';
-
+    protected static ?string $navigationGroup = 'About us page';
+    
     public static function form(Form $form): Form
     {
         return $form
@@ -122,9 +123,9 @@ class AboutSectionResource extends Resource
                         Forms\Components\FileUpload::make('image_beach')
                             ->required()
                             ->image()
-                            ->disk('public') // Specify the disk
-                            ->directory('about-section') // This will create storage/app/public/about-section
-                            ->visibility('public') // Make files publicly accessible
+                            ->disk('public')
+                            ->directory('about-section')
+                            ->visibility('public')
                             ->label('Beach Image'),
                         
                         Forms\Components\FileUpload::make('image_hills')

@@ -50,10 +50,10 @@ class StaticAmenitiesGalleryResource extends Resource
                     ->multiple()
                     ->image()
                     ->maxFiles(10)
-                    ->disk('public') // Use the public disk
-                    ->directory('static-amenities-gallery') // Directory within public disk
-                    ->visibility('public') // Make files publicly accessible
-                    ->preserveFilenames() // Preserve original filenames
+                    ->disk('public')
+                    ->directory('static-amenities-gallery')
+                    ->visibility('public')
+                    ->preserveFilenames()
                     ->getUploadedFileNameForStorageUsing(
                         fn (TemporaryUploadedFile $file): string => 
                             (string) str($file->getClientOriginalName())
@@ -62,7 +62,7 @@ class StaticAmenitiesGalleryResource extends Resource
                     ->reorderable()
                     ->appendFiles()
                     ->required()
-                    ->columnSpanFull(), // Span full width
+                    ->columnSpanFull(),
                 Forms\Components\TextInput::make('sort_order')
                     ->numeric()
                     ->default(0),
@@ -85,7 +85,7 @@ class StaticAmenitiesGalleryResource extends Resource
                     ->sortable(),
                 Tables\Columns\ImageColumn::make('images')
                     ->label('Preview Image')
-                    ->disk('public') // Specify the public disk for image display
+                    ->disk('public')
                     ->getStateUsing(function ($record) {
                         $images = $record->images;
                         return count($images) > 0 ? $images[0] : null;
@@ -107,7 +107,7 @@ class StaticAmenitiesGalleryResource extends Resource
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make()
                     ->before(function ($record) {
-                        // Delete associated images from the public disk
+                        // Delete associated images from storage
                         foreach ($record->images as $image) {
                             Storage::disk('public')->delete($image);
                         }

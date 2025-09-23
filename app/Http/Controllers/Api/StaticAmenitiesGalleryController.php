@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Api;
+
 use App\Http\Controllers\Controller;
 use App\Models\StaticAmenitiesGallery;
 use Illuminate\Http\Request;
-
 
 class StaticAmenitiesGalleryController extends Controller
 {

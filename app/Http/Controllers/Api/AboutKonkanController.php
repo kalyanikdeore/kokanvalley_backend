@@ -24,8 +24,8 @@ class AboutKonkanController extends Controller
                         'en' => 'At Konkan valley agro farms, we are the fearless trailblazers...', 
                         'mr' => 'कोकण व्हॅली अ‍ॅग्रो फार्म्स मध्ये, आम्ही निधड्या मार्गक्रमक आहोत...'
                     ],
-                    'image1_url' => Storage::url('default-images/kokan4.jpg'),
-                    'image2_url' => Storage::url('default-images/kokan14.jpg'),
+                    'image1_url' => asset('uploads/default-images/kokan4.jpg'),
+                    'image2_url' => asset('uploads/default-images/kokan14.jpg'),
                     'video_url' => 'https://www.youtube.com/@KonkanVallyAgroFarms',
                     'watch_story_text' => ['en' => 'Watch our Story', 'mr' => 'आमची कहाणी पहा'],
                     'overlap_image_alt' => ['en' => 'Leela Farmhouse garden view', 'mr' => 'लीला फार्महाऊस बाग दृश्य'],
@@ -35,10 +35,10 @@ class AboutKonkanController extends Controller
                 ]);
             }
             
-            // Convert stored paths to full URLs
-            $aboutKonkan->image1_url = $aboutKonkan->image1_url ? Storage::url($aboutKonkan->image1_url) : null;
-            $aboutKonkan->image2_url = $aboutKonkan->image2_url ? Storage::url($aboutKonkan->image2_url) : null;
-            $aboutKonkan->founder_image_url = $aboutKonkan->founder_image_url ? Storage::url($aboutKonkan->founder_image_url) : null;
+            // Convert stored paths to full URLs using asset()
+            $aboutKonkan->image1_url = $aboutKonkan->image1_url ? asset('uploads/' . $aboutKonkan->image1_url) : null;
+            $aboutKonkan->image2_url = $aboutKonkan->image2_url ? asset('uploads/' . $aboutKonkan->image2_url) : null;
+            $aboutKonkan->founder_image_url = $aboutKonkan->founder_image_url ? asset('uploads/' . $aboutKonkan->founder_image_url) : null;
             
             return response()->json([
                 'id' => $aboutKonkan->id,
@@ -88,7 +88,7 @@ class AboutKonkanController extends Controller
                 'is_active' => 'boolean',
             ]);
 
-            // Handle file uploads
+            // Handle file uploads to public disk
             $image1Path = $request->file('image1')->store('about-konkan', 'public');
             $image2Path = $request->file('image2')->store('about-konkan', 'public');
             
@@ -134,10 +134,10 @@ class AboutKonkanController extends Controller
     public function show(AboutKonkan $aboutKonkan)
     {
         try {
-            // Convert stored paths to full URLs
-            $aboutKonkan->image1_url = $aboutKonkan->image1_url ? Storage::url($aboutKonkan->image1_url) : null;
-            $aboutKonkan->image2_url = $aboutKonkan->image2_url ? Storage::url($aboutKonkan->image2_url) : null;
-            $aboutKonkan->founder_image_url = $aboutKonkan->founder_image_url ? Storage::url($aboutKonkan->founder_image_url) : null;
+            // Convert stored paths to full URLs using asset()
+            $aboutKonkan->image1_url = $aboutKonkan->image1_url ? asset('uploads/' . $aboutKonkan->image1_url) : null;
+            $aboutKonkan->image2_url = $aboutKonkan->image2_url ? asset('uploads/' . $aboutKonkan->image2_url) : null;
+            $aboutKonkan->founder_image_url = $aboutKonkan->founder_image_url ? asset('uploads/' . $aboutKonkan->founder_image_url) : null;
             
             return response()->json([
                 'id' => $aboutKonkan->id,

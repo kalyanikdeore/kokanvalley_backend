@@ -34,7 +34,8 @@ class KonkanGalleryImageResource extends Resource
                 Forms\Components\FileUpload::make('image_path')
                     ->image()
                     ->required()
-                    ->directory('konkan-gallery')
+                    ->disk('public') // Use the public disk
+                    ->directory('konkan-gallery') // This will store in public/uploads/konkan-gallery
                     ->preserveFilenames(),
                 Forms\Components\TextInput::make('sort_order')
                     ->numeric()
@@ -50,6 +51,7 @@ class KonkanGalleryImageResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('image_path')
+                    ->disk('public') // Use the public disk
                     ->size(80),
                 Tables\Columns\TextColumn::make('category.name_en')
                     ->numeric()

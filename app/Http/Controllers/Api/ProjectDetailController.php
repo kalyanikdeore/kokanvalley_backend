@@ -96,7 +96,7 @@ class ProjectDetailController extends Controller
             ],
             'highlights' => $highlights,
             'images' => $project->images->map(function ($image) {
-                return ['url' => asset('storage/' . $image->path)];
+                return ['url' => asset('uploads/' . $image->path)];
             }),
             'videos' => $project->videos->map(function ($video) {
                 // Check if video exists in storage
@@ -105,8 +105,8 @@ class ProjectDetailController extends Controller
                 
                 return [
                     'id' => $video->id,
-                    'video_url' => $videoExists ? asset('storage/' . $video->video_path) : null,
-                    'thumbnail_url' => $thumbnailExists ? asset('storage/' . $video->thumbnail_path) : null,
+                    'video_url' => $videoExists ? asset('uploads/' . $video->video_path) : null,
+                    'thumbnail_url' => $thumbnailExists ? asset('uploads/' . $video->thumbnail_path) : null,
                     'order' => $video->order,
                     'exists' => $videoExists
                 ];
@@ -140,7 +140,7 @@ class ProjectDetailController extends Controller
                     'media' => $product->media->map(function ($media) {
                         return [
                             'type' => $media->type,
-                            'url' => asset('storage/' . $media->media_path),
+                            'url' => asset('uploads/' . $media->media_path),
                         ];
                     }),
                 ];
