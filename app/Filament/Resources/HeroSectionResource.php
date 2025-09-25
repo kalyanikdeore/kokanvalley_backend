@@ -17,8 +17,8 @@ class HeroSectionResource extends Resource
     protected static ?string $model = HeroSection::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-play';
-
-    protected static ?string $navigationGroup = 'Home Page';
+ protected static ?string $navigationGroup = 'Home Page';
+    protected static ?string $pluralModelLabel = 'Hero Section';
 
     public static function form(Form $form): Form
     {

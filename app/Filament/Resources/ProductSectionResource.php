@@ -17,7 +17,9 @@ class ProductSectionResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
 
-    protected static ?string $navigationGroup = 'Content Management';
+
+       protected static ?string $navigationGroup = 'Product Page';
+    protected static ?string $pluralModelLabel = 'Products';
 
     public static function form(Form $form): Form
     {

@@ -20,8 +20,8 @@ class AboutKokanValleyResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-information-circle';
     
-    protected static ?string $navigationGroup = 'Room Management';
-    protected static ?string $navigationLabel = 'Family Room About';
+      protected static ?string $navigationGroup = 'About Us Page';
+    protected static ?string $pluralModelLabel = 'About Konkan Valley';
 
     public static function form(Form $form): Form
     {

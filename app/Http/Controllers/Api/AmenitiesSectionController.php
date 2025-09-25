@@ -28,9 +28,16 @@ class AmenitiesSectionController extends Controller
 
         $imagePaths = [];
         if ($request->hasFile('images')) {
+            // Create nested directory if it doesn't exist
+            $directory = public_path('amenities-images');
+            if (!file_exists($directory)) {
+                mkdir($directory, 0755, true);
+            }
+            
             foreach ($request->file('images') as $image) {
-                $filename = time() . '_' . $image->getClientOriginalName();
-                $image->move(public_path('uploads'), $filename);
+                $filename = time() . '_' . uniqid() . '_' . $image->getClientOriginalName();
+                $image->move($directory, $filename);
+                // Store only filename, not full path
                 $imagePaths[] = $filename;
             }
         }
@@ -42,46 +49,21 @@ class AmenitiesSectionController extends Controller
         return response()->json($amenity, 201);
     }
 
-    // Show single amenity
-    public function show($id)
-    {
-        return response()->json(AmenitiesSection::findOrFail($id));
-    }
-
-    // Update amenity
-    public function update(Request $request, $id)
-    {
-        $amenity = AmenitiesSection::findOrFail($id);
-
-        $data = $request->validate([
-            'title_en' => 'sometimes|string',
-            'title_mr' => 'sometimes|string',
-            'description_en' => 'nullable|string',
-            'description_mr' => 'nullable|string',
-            'icon' => 'nullable|string',
-            'images.*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-        ]);
-
-        $imagePaths = $amenity->images ?? [];
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $image) {
-                $filename = time() . '_' . $image->getClientOriginalName();
-                $image->move(public_path('uploads'), $filename);
-                $imagePaths[] = $filename;
-            }
-        }
-
-        $data['images'] = $imagePaths;
-
-        $amenity->update($data);
-
-        return response()->json($amenity);
-    }
-
     // Delete amenity
     public function destroy($id)
     {
         $amenity = AmenitiesSection::findOrFail($id);
+        
+        // Delete associated images from storage
+        if (!empty($amenity->images)) {
+            foreach ($amenity->images as $image) {
+                $imagePath = public_path('amenities-images/' . $image);
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
+        }
+        
         $amenity->delete();
 
         return response()->json(['message' => 'Deleted successfully']);

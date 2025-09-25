@@ -20,6 +20,8 @@ class WhyChooseUsResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-check-badge';
     protected static ?string $navigationGroup = 'Projects';
+         
+    protected static ?string $pluralModelLabel = 'Testimonials';
     protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form

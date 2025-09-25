@@ -19,8 +19,8 @@ class KonkanGalleryImageResource extends Resource
     protected static ?string $model = KonkanGalleryImage::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-photo';
-
-    protected static ?string $navigationGroup = 'Gallery Management';
+ protected static ?string $navigationGroup = 'Gallery page';
+    protected static ?string $navigationLabel = 'Konkan Gallery';
 
     public static function form(Form $form): Form
     {

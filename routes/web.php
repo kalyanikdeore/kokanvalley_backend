@@ -25,6 +25,7 @@ use App\Http\Controllers\Api\StaticAmenitiesGalleryController;
 use App\Http\Controllers\Api\LocationController ;
 use App\Http\Controllers\Api\ProductSectionController ;
 use App\Http\Controllers\Api\AmenitiesSectionController;
+use App\Http\Controllers\Api\FooterController;
 
 Route::prefix('/api')->controller(HomeController::class)->group(function () { 
 Route::get('/why-choose', [WhyChooseController::class, 'index']);
@@ -52,4 +53,6 @@ Route::get('/static-amenities-gallery', [ProductsectionController::class, 'index
 Route::get('/locations', [LocationController::class, 'index']);
 Route::get('/product-sections', [ProductSectionController::class, 'index']);
 Route::get('/amenities-sections', [AmenitiesSectionController::class, 'index']);
+Route::get('/footer', [FooterController::class, 'index']);
+Route::post('/footer', [FooterController::class, 'store'])->middleware('auth:sanctum');
 });

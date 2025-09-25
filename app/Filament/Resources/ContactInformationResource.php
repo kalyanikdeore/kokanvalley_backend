@@ -18,11 +18,7 @@ class ContactInformationResource extends Resource
     protected static ?string $model = ContactInformation::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-phone';
-
-    protected static ?string $navigationLabel = 'Contact Information';
-
-    protected static ?string $modelLabel = 'Contact Information';
-
+       protected static ?string $navigationGroup = 'Contact Page';
     protected static ?string $pluralModelLabel = 'Contact Information';
 
     // Make it a singleton resource (only one record)

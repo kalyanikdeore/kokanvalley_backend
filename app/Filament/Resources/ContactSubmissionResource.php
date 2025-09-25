@@ -19,7 +19,8 @@ class ContactSubmissionResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left-ellipsis';
 
-    protected static ?string $navigationGroup = 'Contact Management';
+       protected static ?string $navigationGroup = 'Contact Page';
+    protected static ?string $navigationLabel = 'Contact Submition';
 
     public static function form(Form $form): Form
     {

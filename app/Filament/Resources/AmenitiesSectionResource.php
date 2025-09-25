@@ -7,14 +7,14 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Table;
+use Filament\Tables\Table;  
 
 class AmenitiesSectionResource extends Resource
 {
     protected static ?string $model = AmenitiesSection::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
-    protected static ?string $navigationGroup = 'Website Content';
+    protected static ?string $navigationGroup = 'Gallery page';
     protected static ?string $navigationLabel = 'Amenities Section';
 
     public static function form(Form $form): Form
@@ -47,7 +47,7 @@ class AmenitiesSectionResource extends Resource
                     ->label('Images')
                     ->multiple()
                     ->image()
-                    ->directory('uploads')
+                    ->directory('amenities-images/uploads') // Changed to nested directory
                     ->reorderable()
                     ->maxFiles(10),
             ]);

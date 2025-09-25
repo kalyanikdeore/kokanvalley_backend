@@ -19,7 +19,8 @@ class KonkanGalleryCategoryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationGroup = 'Gallery Management';
+ protected static ?string $navigationGroup = 'Gallery page';
+    protected static ?string $navigationLabel = 'Konkan Category';
 
     public static function form(Form $form): Form
     {

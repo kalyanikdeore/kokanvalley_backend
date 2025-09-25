@@ -18,6 +18,8 @@ class GuestExperienceResource extends Resource
     protected static ?string $model = GuestExperience::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
+     protected static ?string $navigationGroup = 'Gallery page';
+    protected static ?string $navigationLabel = 'Guest Experience';
 
     public static function form(Form $form): Form
     {

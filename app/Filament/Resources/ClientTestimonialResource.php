@@ -19,7 +19,9 @@ class ClientTestimonialResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left-right';
 
-    protected static ?string $navigationGroup = 'Content Management';
+   
+ protected static ?string $navigationGroup = 'Home Page';
+    protected static ?string $pluralModelLabel = 'Testimonial';
 
     public static function form(Form $form): Form
     {
